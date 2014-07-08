@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Thu Jun 26 2014 20:22:00 GMT+0000 (UTC) -->
+<html data-wf-site="5398758676cdc5c767db4f97">
+<head>
+  <meta charset="utf-8">
+  <title>Webflow-AngularJS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/webflow.css">
+  <link rel="stylesheet" type="text/css" href="css/webflowangularjs.webflow.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="js/modernizr.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
+</head>
+<body data-ng-app="customersApp">
+  <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+    <div class="w-container">
+      <a class="w-nav-brand w-clearfix brand" href="#">
+        <img class="headerlogo" src="images/people.png" alt="logo">
+        <div class="brand-text" data-ix="menuhighlight">Customer Manager</div>
+      </a>
+      <nav class="w-nav-menu nav" role="navigation" data-ng-controller="NavbarController" data-highlight-class-name="Current" directives="data-menu-highlighter"><a class="w-nav-link navlink" href="#/customers" data-ng-class="{&apos;w--current&apos;:getClass(&apos;/customers&apos;)}" data-ix="menuhighlight">Customers</a><a class="w-nav-link navlink" href="/#/orders" data-ng-class="{&apos;w--current&apos;:getClass(&apos;/orders&apos;)}" data-ix="menuhighlight">Orders</a><a class="w-nav-link loginout navlink" href="#" id="nav-login" data-ng-click="loginOrOut()">Log{{loginLogoutText}}</a>
+      </nav>
+      <div class="w-nav-button">
+        <div class="w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+  <div class="directive" id="animated-view">
+    <div class="w-slider mybiggerslider" data-animation="slide" data-duration="500" data-infinite="1">
+      <div class="w-slider-mask">
+        <div class="w-slide">
+          <div class="customers template view" id="customers">
+            <div class="w-container">
+              <h3>Customers</h3>
+              <div class="w-form">
+                <form class="w-clearfix" id="email-form" name="email-form" data-name="Email Form" action="http://localhost:9009/">
+                  <div class="firstnameblock">
+                    <label for="name">First Name</label>
+                    <input class="w-input" id="name" type="text" placeholder="First Name" name="name" data-name="Name" required="required" data-ng-model="newCustomer.firstName" data-inputmask="&apos;mask&apos;: &apos;99-9999999&apos;">
+                  </div>
+                  <div class="lastname">
+                    <label for="lastname">Last Name</label>
+                    <input class="w-input" id="lastname" type="text" placeholder="Last Name" name="email" data-name="Email" required="required" data-ng-model="newCustomer.lastName">
+                  </div>
+                  <div class="customercity">
+                    <label for="newcustomer-city">Customer City</label>
+                    <input class="w-input" id="newcustomer-city" type="text" placeholder="Cusomer City" name="newcustomer-city" required="required" data-name="newCustomer.city" data-ng-model="newCustomer.city">
+                  </div>
+                  <input class="w-button" id="submitcustomer" type="submit" value="Add Customer" data-wait="Please wait..." data-ng-click="insertCustomer()">
+                </form>
+                <div class="w-form-done">
+                  <p>Customer has been added!</p>
+                </div>
+                <div class="w-form-fail">
+                  <p>Oops! Webflow says something went wrong while submitting the form :(</p>
+                </div>
+              </div>
+              <div class="customerlist">
+                <div class="w-clearfix card" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ix="menuhighlight">
+                  <div class="cardheader">
+                    <div class="custname">{{customer.firstName + ' ' + customer.lastName}}</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>{{customer.city}}</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">mockmeup class will be removed</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim mockmeup</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W4</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W5</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W6</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W7</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W8</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+                <div class="w-clearfix card mockmeup" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <img class="btn" src="images/x.png" alt="538f52203674b7a3720d7a14_x.png" data-ng-click="deleteCustomer(customer.id)" data-ng-mouseover="mouseOverThing()" data-ix="expandonmouseover">
+                  <div class="cardheader">
+                    <div class="custname">Jim W9</div>
+                  </div>
+                  <div class="cardbody">
+                    <div>San Francisco</div>
+                  </div><a class="cardbody btn-link" href="#/customerorders/{{customer.id}}">View {{ customer.orders.length }} Orders</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-slide">
+          <div class="customerorders template view" id="customer_orders">
+            <div class="w-container">
+              <h3>Customer Orders</h3>
+              <div class="row">
+                <div class="indent">
+                  <h4>Orders for&nbsp;{{ customer.firstName + ' ' + customer.lastName }}</h4>
+                  <div>{{customer.city}}</div>
+                </div>
+              </div>
+              <div class="orderstable" data-ng-controller="OrderChildController">
+                <div class="w-row myrowheader">
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;product&apos;)">
+                    <div>Product</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;quantity&apos;)">
+                    <div>Quantity</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;price&apos;)">
+                    <div>Unit Price</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;orderTotal&apos;)">
+                    <div>Total</div>
+                  </div>
+                </div>
+                <div class="w-row mydatarow" data-ng-repeat="order in customer.orders | orderBy:orderby:reverse">
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                    <div>{{ order.product }}</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                    <div>{{ order.quantity }}</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                    <div>{{ order.price | currency }}</div>
+                  </div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                    <div>{{ order.orderTotal | currency }}</div>
+                  </div>
+                </div>
+                <div class="w-row info">
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                  <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                    <div class="grandtotal"><em>{{ ordersTotal | currency }}</em>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center error">
+                  <div class="error" data-ng-hide="customer.orders || customer.orders.length &gt; 0"><strong>No orders found</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-slide">
+          <div class="orders template view" id="orders">
+            <div class="w-container">
+              <h3>All Customer Orders</h3>
+              <div>
+                <div class="row" data-ng-repeat="customer in customers | orderBy:&apos;lastName&apos;">
+                  <div class="indent">
+                    <h4><a href="#/customerorders/{{customer.id}}">{{ customer.firstName + ' ' + customer.lastName }}</a></h4>
+                  </div>
+                  <div class="orderstable" data-ng-controller="OrderChildController">
+                    <div class="w-row myrowheader">
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;product&apos;)">
+                        <div>Product</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;quantity&apos;)">
+                        <div>Quantity</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;price&apos;)">
+                        <div>Unit Price</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3" data-ng-click="setOrder(&apos;orderTotal&apos;)">
+                        <div>Total</div>
+                      </div>
+                    </div>
+                    <div class="w-row mydatarow" data-ng-repeat="order in customer.orders | orderBy:orderby:reverse">
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                        <div>{{ order.product }}</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                        <div>{{ order.quantity }}</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                        <div>{{ order.price | currency }}</div>
+                      </div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                        <div>{{ order.orderTotal | currency }}</div>
+                      </div>
+                    </div>
+                    <div class="w-row info">
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3"></div>
+                      <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                        <div class="grandtotal"><em>{{ ordersTotal | currency }}</em>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center error">
+                      <div class="error" data-ng-hide="customer.orders || customer.orders.length &gt; 0"><strong>No orders found</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-slider-arrow-left">
+        <div class="w-icon-slider-left"></div>
+      </div>
+      <div class="w-slider-arrow-right">
+        <div class="w-icon-slider-right"></div>
+      </div>
+      <div class="w-slider-nav w-round"></div>
+    </div>
+  </div>
+  <footer id="footer">
+    <div class="w-nav" data-collapse="none" data-animation="default" data-duration="400" data-contain="1">
+      <div class="w-container">
+        <nav class="w-nav-menu" role="navigation"><%= mailToArray[0] %> <br> <%= mailToArray[1] %>
+        </nav>
+        <div class="w-nav-button">
+          <div class="w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="js/webflow.js"></script>
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>
