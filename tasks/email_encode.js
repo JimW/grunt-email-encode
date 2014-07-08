@@ -17,6 +17,9 @@ module.exports = function(grunt) {
      // TODO: Maybe add some configs
     var options = this.options({
       debug: false,
+      // generated_mail_scripts_folder: 'tmp/email_encode/mail_scripts'
+      // TODO Because dom_munger might be choking on CDATA, 
+      //      replace with these numbered include scripts instead.
     });
 
     var done = this.async();
@@ -26,6 +29,7 @@ module.exports = function(grunt) {
     // TODO: Add ability to bypass encode if mailto's parent element contains a "spam-me" class
     
     // Iterate over all src-dest file pairs.
+    // TODO: figure out seperate src:, dest: way of specifying these
     this.files.forEach(function(f) {
 
       var dest = f.dest;
@@ -50,10 +54,12 @@ module.exports = function(grunt) {
 
       emailEncoder.on('error', function (error) {
         console.log("emailEncoder Error :(");
+        done(); // TODO: Return errors
       });
 
       emailEncoder.on('failure', function (reason) {
       // TODO: Error recovery
+        done();
       });
       
       emailEncoder.on('success', function (convertedHTMLFile) {
