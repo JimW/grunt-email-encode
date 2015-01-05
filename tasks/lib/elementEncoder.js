@@ -86,7 +86,7 @@ function ElementEncoder(someHtml, grunt) {
 								index++;
 					});
 
-          htmlWithVariables = $('html')[0].outerHTML;
+          htmlWithVariables = "<!DOCTYPE html>" + $('html')[0].outerHTML;
 
           // console.log(htmlWithVariables);
 	  		  _encodeAllEmails();
